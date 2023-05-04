@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.5"
 
 services:
   mosquitto:
@@ -40,6 +40,8 @@ services:
       - "traefik.http.routers.asol-dev-interface.entrypoints=web,websecure"
       - "traefik.http.routers.asol-dev-interface.tls=true"
       - "traefik.http.routers.asol-dev-interface.tls.certresolver=myresolver"
+    networks:
+      - traefik
 
 
 networks:
