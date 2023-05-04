@@ -43,9 +43,10 @@ services:
     networks:
       - traefik
 
-  webrtc-websocket:
-    image: containous/whoami
-    network_mode: host
+
+  webrtc-proxy:
+    image: alpine/socat
+    command: tcp-listen:8889,fork,reuseaddr tcp-connect:172.17.0.1:8889
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.webrtc-websocket.rule=Host(`webrtc.${DOMAIN:-gregstretton.org}`)"
@@ -53,6 +54,8 @@ services:
       - "traefik.http.routers.webrtc-websocket.tls=true"
       - "traefik.http.routers.webrtc-websocket.tls.certresolver=myresolver"
       - "traefik.http.services.webrtc-websocket.loadbalancer.server.port=8889"
+    networks:
+      - traefik
 
 
 
