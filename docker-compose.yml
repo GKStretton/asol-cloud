@@ -16,7 +16,7 @@ services:
       - "traefik.enable=true"
 
       - "traefik.http.routers.mosquitto-websocket.rule=Host(`mqtt.${DOMAIN:-gregstretton.org}`)"
-      - "traefik.http.routers.mosquitto-websocket.entrypoints=websocketsecure"
+      - "traefik.http.routers.mosquitto-websocket.entrypoints=websecure"
       - "traefik.http.routers.mosquitto-websocket.tls=true"
       - "traefik.http.routers.mosquitto-websocket.tls.certresolver=myresolver"
 
