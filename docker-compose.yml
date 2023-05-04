@@ -40,6 +40,13 @@ services:
       - "traefik.http.routers.asol-dev-interface.entrypoints=web,websecure"
       - "traefik.http.routers.asol-dev-interface.tls=true"
       - "traefik.http.routers.asol-dev-interface.tls.certresolver=myresolver"
+
+      # dev test streaming
+      - "traefik.http.routers.webrtc-websocket.rule=Host(`webrtc.${DOMAIN:-gregstretton.org}`)"
+      - "traefik.http.routers.webrtc-websocket.entrypoints=websecure"
+      - "traefik.http.routers.webrtc-websocket.tls=true"
+      - "traefik.http.routers.webrtc-websocket.tls.certresolver=myresolver"
+      - "traefik.http.services.webrtc-websocket.loadbalancer.server.port=8889"
     networks:
       - traefik
 
