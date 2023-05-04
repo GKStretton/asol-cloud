@@ -36,7 +36,7 @@ services:
       - 8085:80
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.asol-dev-interface.rule=Host(`asol.${DOMAIN}`)"
+      - "traefik.http.routers.asol-dev-interface.rule=Host(`asol.${DOMAIN:-gregstretton.org}`)"
       - "traefik.http.routers.asol-dev-interface.entrypoints=web,websecure"
       - "traefik.http.routers.asol-dev-interface.tls=true"
       - "traefik.http.routers.asol-dev-interface.tls.certresolver=myresolver"
