@@ -1,0 +1,47 @@
+version: "3.7"
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    command: mosquitto -c /mosquittoconf/mosquitto.conf
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - ./mosquitto:/mosquittoconf
+    restart: unless-stopped
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.mosquitto-websocket.rule=Host(`mqtt.${DOMAIN:-gregstretton.org}`)"
+      - "traefik.http.routers.mosquitto-websocket.entrypoints=websocketsecure"
+      - "traefik.http.routers.mosquitto-websocket.tls=true"
+      - "traefik.http.routers.mosquitto-websocket.tls.certresolver=myresolver"
+
+      # Add a service for WebSocket traffic
+      - "traefik.http.services.mosquitto-websocket.loadbalancer.server.port=9001"
+
+       # TCP Router for MQTT
+      - "traefik.tcp.routers.mqtt-router.rule=HostSNI(`mqtt.${DOMAIN:-gregstretton.org}`)"
+      - "traefik.tcp.routers.mqtt-router.entrypoints=mqttsecure"
+      - "traefik.tcp.routers.mqtt-router.tls=true"
+      - "traefik.tcp.routers.mqtt-router.tls.certresolver=myresolver"
+      - "traefik.tcp.routers.mqtt-router.service=mosquitto"
+      - "traefik.tcp.services.mosquitto.loadbalancer.server.port=1883"
+  interface:
+    image: gkstretton/asol-dev-interface:latest
+    ports:
+      - 8085:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.asol-dev-interface.rule=Host(`asol.${DOMAIN}`)"
+      - "traefik.http.routers.asol-dev-interface.entrypoints=web,websecure"
+      - "traefik.http.routers.asol-dev-interface.tls=true"
+      - "traefik.http.routers.asol-dev-interface.tls.certresolver=myresolver"
+
+
+networks:
+  traefik:
+    name: traefik_network
