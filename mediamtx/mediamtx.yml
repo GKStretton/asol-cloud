@@ -215,8 +215,8 @@ webrtcICETCPMuxAddress:
 
 paths:
   top-cam-crop:
-    source: rtsp://172.17.0.1:8554/top-cam-crop #172.17.0.1:8554/front-cam
+    source: rtsp://localhost:8554/top-cam-crop #172.17.0.1:8554/front-cam
     sourceOnDemand: yes
   front-cam-crop:
-    source: rtsp://172.17.0.1:8554/front-cam-crop #172.17.0.1:8554/front-cam
+    source: rtsp://localhost:8554/front-cam-crop #172.17.0.1:8554/front-cam
     sourceOnDemand: yes

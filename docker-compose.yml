@@ -46,8 +46,9 @@ services:
   mediamtx:
     image: aler9/rtsp-simple-server
     restart: unless-stopped
-    networks:
-      - traefik
+    # networks:
+      # - traefik
+    network_mode: "host"
     ports:
       - 8889:8889
     volumes:
