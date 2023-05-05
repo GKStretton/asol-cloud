@@ -59,7 +59,6 @@ services:
       - "traefik.http.routers.webrtc-websocket.entrypoints=websecure"
       - "traefik.http.routers.webrtc-websocket.tls=true"
       - "traefik.http.routers.webrtc-websocket.tls.certresolver=myresolver"
-      - "traefik.http.services.webrtc-websocket.loadbalancer.server.port=8889"
 
 networks:
   traefik:
