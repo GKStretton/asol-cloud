@@ -55,11 +55,11 @@ services:
       - ./mediamtx/mediamtx.yml:/rtsp-simple-server.yml
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.webrtc-websocket.rule=Host(`${DOMAIN:-gregstretton.org}`)"
-      - "traefik.http.routers.webrtc-websocket.entrypoints=webrtc"
-      - "traefik.http.routers.webrtc-websocket.tls=true"
-      - "traefik.http.routers.webrtc-websocket.tls.certresolver=myresolver"
-      - "traefik.http.services.webrtc-websocket.loadbalancer.server.port=8889"
+      - "traefik.tcp.routers.webrtc-websocket.rule=Host(`${DOMAIN:-gregstretton.org}`)"
+      - "traefik.tcp.routers.webrtc-websocket.entrypoints=webrtc"
+      - "traefik.tcp.routers.webrtc-websocket.tls=true"
+      - "traefik.tcp.routers.webrtc-websocket.tls.certresolver=myresolver"
+      - "traefik.tcp.services.webrtc-websocket.loadbalancer.server.port=8889"
 
 networks:
   traefik:
