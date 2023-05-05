@@ -43,21 +43,22 @@ services:
     networks:
       - traefik
 
-
-  webrtc-proxy:
-    image: alpine/socat
-    command: tcp-listen:8889,fork,reuseaddr tcp-connect:172.17.0.1:8889
-    labels:
-      - "traefik.enable=true"
-      - "traefik.tcp.routers.webrtc-websocket.rule=HostSNI(`webrtc.${DOMAIN:-gregstretton.org}`)"
-      - "traefik.tcp.routers.webrtc-websocket.entrypoints=websecure"
-      - "traefik.tcp.routers.webrtc-websocket.tls=true"
-      - "traefik.tcp.routers.webrtc-websocket.tls.certresolver=myresolver"
-      - "traefik.tcp.services.webrtc-websocket.loadbalancer.server.port=8889"
+  mediamtx:
+    image: aler9/rtsp-simple-server
+    restart: unless-stopped
     networks:
       - traefik
-
-
+    ports:
+      - 8889:8889
+    volumes:
+      - ./mediamtx/mediamtx.yml:/rtsp-simple-server.yml
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.webrtc-websocket.rule=Host(`webrtc.${DOMAIN:-gregstretton.org}`)"
+      - "traefik.http.routers.webrtc-websocket.entrypoints=websecure"
+      - "traefik.http.routers.webrtc-websocket.tls=true"
+      - "traefik.http.routers.webrtc-websocket.tls.certresolver=myresolver"
+      - "traefik.http.services.webrtc-websocket.loadbalancer.server.port=8889"
 
 networks:
   traefik:
