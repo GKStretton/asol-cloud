@@ -43,6 +43,13 @@ services:
     networks:
       - traefik
 
+  # port 8889 is port forwarded so this is served directly rather than through
+  # traefik. I couldn't get traefik to work with webrtc, maybe a NAT type issue.
+  # This is a proxy instance that is accessed through webrtc. internally it
+  # calls the instance on DEPTH through RTSP over port 8554. This connection to
+  # DEPTH is over a reverse ssh tunnel initiated by systemd job sshtunnel.service
+  # on DEPTH.
+  # note that the TLS cert automation is not set up so will expire early August 2023
   mediamtx:
     image: aler9/rtsp-simple-server
     restart: unless-stopped
