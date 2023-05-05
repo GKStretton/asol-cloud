@@ -33,7 +33,7 @@ externalAuthenticationURL:
 # Enable the HTTP API.
 api: no
 # Address of the API listener.
-apiAddress: 127.0.0.1:9997
+apiAddress: localhost:9997
 
 # Enable Prometheus-compatible metrics.
 metrics: no
@@ -69,7 +69,7 @@ protocols: [udp, multicast, tcp]
 # Available values are "no", "strict", "optional".
 encryption: "no"
 # Address of the TCP/RTSP listener. This is needed only when encryption is "no" or "optional".
-rtspAddress: :8554
+rtspAddress: :8555
 # Address of the TCP/TLS/RTSPS listener. This is needed only when encryption is "strict" or "optional".
 rtspsAddress: :8322
 # Address of the UDP/RTP listener. This is needed only when "udp" is in protocols.
@@ -214,6 +214,9 @@ webrtcICETCPMuxAddress:
 # Path parameters
 
 paths:
-  proxied:
-    source: rtsp://172.17.0.1 #:8554
+  top-cam-crop:
+    source: rtsp://172.17.0.1:8554/top-cam-crop #172.17.0.1:8554/front-cam
+    sourceOnDemand: yes
+  front-cam-crop:
+    source: rtsp://172.17.0.1:8554/front-cam-crop #172.17.0.1:8554/front-cam
     sourceOnDemand: yes
