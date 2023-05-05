@@ -1,1 +1,3 @@
 mosquitto/passwords
+mediamtx/server.crt
+mediamtx/server.key
